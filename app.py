@@ -9,9 +9,9 @@ db = SQLAlchemy(app)
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(200), nullable = False)
+    done_by = db.Column(db.String(200), nullable = False)
     date_created = db.Column(db.DateTime, default = datetime.utcnow)
     
-
     def __repr__(self):
         return '<Task %r>' % self.id
 
@@ -21,10 +21,13 @@ def index():
         This function renders the main Dashboard page and handles Add task feature.
     """
     if request.method == 'POST':
-        task_content = request.form['content']
+        task_content = request.form['Content']
+        donetime = request.form['Time']
         if task_content == '':
             return render_template('error.html')
-        new_task = Todo(content=task_content)
+        if done_time == '':
+            return render_template('error.html')
+        new_task = Todo(content=task_content, done_by = donetime)
 
         try:
             db.session.add(new_task)
@@ -57,10 +60,14 @@ def update(id):
     """
     task = Todo.query.get_or_404(id)
     if request.method == 'POST':
-        updated_task_content = request.form['content']
+        updated_task_content = request.form['Content']
+        updated_time = request.form['Time']
         if updated_task_content == '':
             return render_template('error.html')
+        if updated_time == '':
+            return render_template('error.html')
         task.content = updated_task_content
+        task.done_by = updated_time
         try:
             db.session.commit()
             return redirect('/')
