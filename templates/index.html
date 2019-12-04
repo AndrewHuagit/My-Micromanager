@@ -8,9 +8,13 @@
     <div class="content">
         <div style="margin-left:300px; margin-top: 20px; margin-right: 300px ">
             <form  action='/' method='POST'>
-                <div class="form-group">
-                    <label for="exampleFormControlTextarea1"><h4>Add New Task</h4></label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" name='content' rows="3"></textarea>
+                <div class="form-group shadow-textarea">
+                    <label for="exampleFormControlTextarea6">Add Task</label>
+                    <textarea class="form-control z-depth-1" id="exampleFormControlTextarea6" name = "Content" rows="2" placeholder="Task Description"></textarea>
+                </div>
+                <div class="md-form">
+                    <label for="form7">Time to do task</label>
+                    <textarea id="form7" class="md-textarea form-control" name= "Time" rows="1"></textarea>
                 </div>
                     <input class="btn btn-success btn-sm" type="submit" value="Add Task">
             </form>
@@ -27,6 +31,7 @@
                 <tr>
                     <th scope="col">S.No</th>
                     <th scope="col">Task</th>
+                    <th scope="col">Complete By</th>
                     <th scope="col">Added</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -36,6 +41,7 @@
                 <tr>
                     <th scope="row">{{ task.id }}</th>
                     <td>{{ task.content }}</td>
+                    <td>{{ task.done_by }}</td>
                     <td>{{ task.date_created.date() }}</td>
                     <td>
                         <a href='/delete/{{ task.id }}'><button type="button" class="btn btn-danger btn-sm">Delete</button></a>
