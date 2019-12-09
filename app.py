@@ -1,14 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
-from application.database import db
-from application.server import app
-
-with app.test_request_context():
-     db.init_app(app)
-
-     db.create_all()
     
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
@@ -35,7 +27,7 @@ def index():
             return render_template('error.html')
         if done_time == '':
             return render_template('error.html')
-        new_task = Todo(content=task_content, done_by = donetime)
+        new_task = Todo(content=task_content, done_by = done_time)
 
         try:
             db.session.add(new_task)
@@ -44,7 +36,7 @@ def index():
         except:
             return 'There was an issue adding your task'
     else:
-        tasks = Todo.query.order_by(Todo.date_created).all()
+        tasks = Todo.query.order_by(Todo.done_by).all()
         return render_template('index.html', tasks = tasks)
 
 @app.route('/delete/<int:id>')
@@ -82,7 +74,8 @@ def update(id):
         except:
             return 'There was a problem updating the task'
     else:
-        return render_template('update.html', task = task)
+        tasks = Todo.query.order_by(Todo.done_by).all()
+        return render_template('update.html', task = task, tasks = tasks)
 
 
 

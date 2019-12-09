@@ -13,7 +13,7 @@
                     <textarea class="form-control z-depth-1" id="exampleFormControlTextarea6" name = "Content" rows="2" placeholder="Task Description"></textarea>
                 </div>
                 <div class="md-form">
-                    <label for="form7">Complete By:</label>
+                    <label for="form7">Complete By(HH:MM):</label>
                     <textarea id="form7" class="md-textarea form-control" name= "Time" rows="1"></textarea>
                 </div>
                     <input class="btn btn-success btn-sm" type="submit" value="Add Task">
@@ -29,7 +29,6 @@
         <table class="table table-striped table-dark">
             <thead>
                 <tr>
-                    <th scope="col">S.No</th>
                     <th scope="col">Task</th>
                     <th scope="col">Complete By</th>
                     <th scope="col">Added</th>
@@ -39,8 +38,7 @@
             <tbody>
             {% for task in tasks %}
                 <tr>
-                    <th scope="row">{{ task.id }}</th>
-                    <td>{{ task.content }}</td>
+		    <th scope="row">{{ task.content }}</th>
                     <td>{{ task.done_by }}</td>
                     <td>{{ task.date_created.date() }}</td>
                     <td>
