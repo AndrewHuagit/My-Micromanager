@@ -2,6 +2,14 @@ from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
+from application.database import db
+from application.server import app
+
+with app.test_request_context():
+     db.init_app(app)
+
+     db.create_all()
+    
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
@@ -22,7 +30,7 @@ def index():
     """
     if request.method == 'POST':
         task_content = request.form['Content']
-        donetime = request.form['Time']
+        done_time = request.form['Time']
         if task_content == '':
             return render_template('error.html')
         if done_time == '':
